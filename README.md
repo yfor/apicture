@@ -1,2 +1,2 @@
 # apicture
-a picture
+a picture is worth a thousand word.

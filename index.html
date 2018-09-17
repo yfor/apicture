@@ -5,8 +5,8 @@
 <!-- <script src="https://cdn.bootcss.com/angular.js/1.4.6/angular.min.js"></script> -->
 <body>
 
-<div  ng-app="myApp" ng-controller="myCtrl">
-    <ul style="margin: 40px" >
+<div ng-app="myApp" ng-controller="myCtrl">
+    <ul style="margin: 40px">
         <div ng-repeat="a in datare track by $index" style="
     float: left;
     margin-top: {{(10-a)*20}}px;
@@ -21,24 +21,24 @@
 </div>
 
 <script>
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope,$timeout) {
-      var a= []
-        $scope.datare = [6, 2, 3, 9, 5, 7,1, 4,8];
-        $scope.data = [6, 2, 3, 9, 5, 7,1, 4,8];
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope, $timeout) {
+        var a = []
+        $scope.datare = [6, 2, 3, 9, 5, 7, 1, 4, 8];
+        $scope.data = [6, 2, 3, 9, 5, 7, 1, 4, 8];
         for (var i = 1; i < $scope.data.length; i++) {
             var key = $scope.data[i];
             var j = i - 1;
             while ($scope.data[j] > key && j >= 0) {
                 $scope.data[j + 1] = $scope.data[j];
 
-                a.push({index:j+1,data:$scope.data[j]})
+                a.push({index: j + 1, data: $scope.data[j]})
                 j--;
             }
             if (j + 1 < i) {
 
                 $scope.data[j + 1] = key;
-                a.push({index:j+1,data:key})
+                a.push({index: j + 1, data: key})
             }
 
         }
@@ -56,7 +56,7 @@ app.controller('myCtrl', function($scope,$timeout) {
             }
         }, 500)
 
-});
+    });
 </script>
 
 </body>
