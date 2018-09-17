@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script src="angular.min.js"></script>
+<!-- <script src="https://cdn.bootcss.com/angular.js/1.4.6/angular.min.js"></script> -->
+<body>
+
+<div  ng-app="myApp" ng-controller="myCtrl">
+    <ul style="margin: 40px" >
+        <div ng-repeat="a in datare track by $index" style="
+			float: left;
+			width: 30px;
+			height: 240px;
+			text-align: center;
+			background-color: burlywood;
+		">
+		<div style="
+			height: 20px;
+		">{{$index===key?"↓"+dataOri[key]:""}}
+		
+		
+		</div>
+
+<div style="
+
+    height: {{(10-a)*20}}px;
+    background-color: white;
+"></div>		
+		<div style="
+   height: {{a*20}}px;
+    background-color: bisque;
+		">{{a}}{{$index===move?"→":""}}{{$index===insert?"↓":""}}</div>
+
+		<div style="
+			height: 20px;
+		">{{$index===compare?"↑":""}}</div>
+
+        </div>
+
+    </ul>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope,$timeout) {
+      var a= []
+		$scope.dataOri = [6, 2, 3, 9, 5, 7,1, 4,8, 3, 9, 5, 7,5, 7,1, 4,8,6, 2, 3, 9, 5, 7,1, 4,8, 3, 9, 5, 7,5, 7,1, 4,8
+		, 7,5, 7,1, 4,8,6, 2, 3, 9, 5, 7,1, 4,8, 3, 9, 5, 7,5, 7,1, 4];
+			$scope.dataOri = [6, 2, 3, 9, 5, 7,1,4];
+        $scope.datare =  angular.copy($scope.dataOri)
+        $scope.data = angular.copy($scope.dataOri)
+			console.log(new Date())
+        for (var i = 1; i < $scope.data.length; i++) {
+			a.push({index:i,key:"key"})
+            var key = $scope.data[i];
+            var j = i - 1;
+			
+			a.push({index:j,compare:"compare"})
+            while ($scope.data[j] > key && j >= 0) {
+				if(j<i-1){
+					a.push({index:j,compare:"compare"})
+				}
+				
+                $scope.data[j + 1] = $scope.data[j];
+				a.push({index:j,move:"move"})
+				a.push({index:$scope.dataOri.length,move:"move"})
+                a.push({index:j+1,data:$scope.data[j],swap:"swap"})
+                j--;
+				
+            }
+            if (j + 1 < i) {
+                $scope.data[j + 1] = key;
+				//insert
+				a.push({index:j+1,insert:"insert"})
+				a.push({index:$scope.dataOri.length,insert:"insert"})
+                a.push({index:j+1,data:key,swap:"swap"})
+            }
+
+        }
+
+		console.log(new Date())
+        var timer = setInterval(function () {
+            var action = a.shift();
+            if (action) {
+                $timeout(function () {
+				
+					if(action.swap){
+						$scope.datare[action.index] = action.data;
+					}else if(action.key){
+						$scope.key = action.index;
+					}else if(action.compare){
+						$scope.compare = action.index;
+					}else if(action.move){
+						$scope.move = action.index;
+					}else if(action.insert){
+						$scope.insert = action.index;
+					}
+                    
+                }, 0)
+
+            } else {
+                clearInterval(timer)
+            }
+        }, 500)
+		
+		
+		
+
+});
+</script>
+
+</body>
+</html>
